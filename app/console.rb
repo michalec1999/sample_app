@@ -2,9 +2,6 @@ require "rubygems"
 require "simpleconsole"
 require "active_record"
 
-#require 'sqlite3'
-#require './app/models/user'
-
 class ConsoleController < SimpleConsole::Controller
 	def default
 		#self.Test
@@ -13,7 +10,8 @@ class ConsoleController < SimpleConsole::Controller
 			puts address
 		end
 
-		self.TestingUserWithPasswordDB
+		#self.TestingUserWithPasswordDB
+		#self.TestingUserDB
 
 =begin
 		e_u = User.new()
