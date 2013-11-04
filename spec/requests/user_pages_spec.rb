@@ -36,6 +36,7 @@ describe "UserPages" do
         before { click_button submit }
         let(:user) { User.find_by(email: 'user@example.com') }
 
+        it { should have_link('Sign out') }
         it { should have_title(user.name) }
         it { should have_selector('div.alert.alert-success', text: 'Welcome') }
       end
@@ -43,17 +44,11 @@ describe "UserPages" do
   end
 
   context "profile page" do
-=begin
-    user = User.new(name: "Michael Hartl", email: "mhartl@example.com", password: "foobar", password_confirmation: "foobar")
-    user.save
-    user = User.find(1)
-=end
     let(:user) { FactoryGirl.create(:user) }
     before { visit user_path(user) }
 
     it { should have_content(user.name) }
     it { should have_title(full_title(user.name)) }
   end
-
 
 end
