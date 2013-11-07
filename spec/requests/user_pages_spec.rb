@@ -48,7 +48,15 @@ describe "User Pages" do
         it { should_not have_link('delete', href: user_path(admin)) }
 
       end
+    end
+  end
 
+  describe "can't delete self by submitting DELETE request to Users#destroy" do
+    let(:admin) { FactoryGirl.create(:admin) }
+    before { sign_in admin }
+
+    it "should not delete itself" do
+      expect { delete user_path(admin) }.not_to change(User, :count)
     end
   end
 
@@ -74,7 +82,7 @@ describe "User Pages" do
         fill_in "Name", with: "Example User"
         fill_in "Email", with: "user@example.com"
         fill_in "Password", with: "foobar"
-        fill_in "Confirmation", with: "foobar"
+        fill_in "Confirm Password", with: "foobar"
       end
 
       it "should create a user" do
