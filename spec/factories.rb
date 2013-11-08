@@ -8,9 +8,11 @@ FactoryGirl.define do
     factory :admin do
     	admin true
     end
-=begin
-    name     "Michael Hartl"
-    email    "michael@example.com"
-=end
+
   end
+
+    factory :micropost do
+      content "Lorem ipsum"
+      user
+    end
 end
