@@ -8,16 +8,8 @@ class UsersController < ApplicationController
   end
 
   def show
-=begin    
-    user = User.new(name: "Michael Hartl", email: "michalec1999@yahoo.com", password: "foobar", password_confirmation: "foobar")
-    user.save
-  	user = User.first
-    user.update_attributes(name: "Michael Hartl Example User",
-                       email: "example@railstutorial.org",
-                       password: "foobar",
-                        password_confirmation: "foobar")
-=end
     @user = User.find(params[:id])
+    @microposts = @user.microposts.paginate(page: params[:page])
   end
 
   def new
@@ -78,13 +70,6 @@ class UsersController < ApplicationController
     def correct_user
       @user = User.find(params[:id])
       redirect_to(root_url) unless current_user?(@user)
-    end
-
-    def signed_in_user
-      unless signed_in?
-        store_location
-        redirect_to signin_url, notice: "Please sign in."
-      end
     end
 
     def admin_user
