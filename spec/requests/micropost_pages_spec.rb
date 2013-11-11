@@ -10,6 +10,7 @@ describe "Micropost Pages" do
 	describe "micropost creation" do
 		before { visit root_path }
 
+
 		describe "with invalid information" do
 
 			it "should not create a micropost" do
@@ -29,8 +30,53 @@ describe "Micropost Pages" do
 			it "should create a micropost" do
 				expect { click_button "Post" }.to change(Micropost, :count)
 			end
-
+			
 		end
+
+		describe "0 micropost count" do
+			it { should have_content('0 micropost') }
+		end
+
+		describe "1 micropost count" do
+			before { fill_in 'micropost_content', with: "Lorem Ipsum" }
+			before { click_button "Post" }
+			it { should have_content('1 micropost') }
+		end
+
+		describe "2 microposts count" do
+			before { fill_in 'micropost_content', with: "Lorem Ipsum" }
+			before { click_button "Post" }
+			before { fill_in 'micropost_content', with: "Lorem Ipsum2" }
+			before { click_button "Post" }
+			it { should have_content('2 microposts') }
+		end
+
+		describe "no pagination" do
+			it { should_not have_content('Next') }
+		end
+
+		describe "pagination" do
+      		for i in 0..30
+      			before { fill_in 'micropost_content', with: "Lorem Ipsum" }
+				before { click_button "Post" }
+      		end
+      		it { should have_selector('div.pagination') }
+		end
+
+	end
+
+	describe "other micropost users" do
+		#before { visit root_path }
+		
+		before { @user2 = User.new(name: "Example User2", email: "user2@example.com", password: "foobar", password_confirmation: "foobar")}
+		before { @user2.save }
+		before { FactoryGirl.create(:micropost, user: @user2) }
+
+		before { visit user_path(@user2) }
+
+		it { should have_title(@user2.name) }
+		it { should have_content("Microposts (1)")}
+		it { should_not have_link('delete') }
 
 	end
 

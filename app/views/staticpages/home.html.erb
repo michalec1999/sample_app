@@ -2,6 +2,7 @@
 <% provide(:title, 'Home') %>
 <% end %>
 <% if signed_in? %>
+<!--	
 	<div class="row">
 		<aside class="span4">
 			<section>
@@ -15,8 +16,11 @@
 			<h3>Micropost Feed</h3>
 			<%= render 'shared/feed' %>
 		</div>
-	</div>
+	</div>-->
+	<%= render 'shared/userandposts' %>
 <% else %>
+	<%= render 'shared/welcome' %>
+<!--	
 	<div class="center hero-unit">
 		<h1>Welcome to the home of the Sample App</h1>
 		<h2>This is the home page for the
@@ -26,4 +30,5 @@
 		<%= link_to "Sign up now!", signup_path, class: "btn btn-large btn-primary" %>
 	</div>
 	<%= link_to image_tag("rails.png", alt: 'Rails icon goes here'), 'http://rubyonrails.org/' %>
+-->
 <% end %>
